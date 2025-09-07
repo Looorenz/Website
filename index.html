@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reviu'</title>
+    <meta name="description" content="Landing clone con font Inter e avatar immagine sostituibili" />
+
+    <!-- Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #19171A;
+            --muted: #8c8d93;
+            --ring: rgba(0, 0, 0, .06);
+            --btn: #19171A;
+            --btn-text: #fff;
+            --input-border: rgba(0, 0, 0, .18);
+            --shadow: 0 6px 20px rgba(0, 0, 0, .06);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .wrap {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 20px;
+        }
+
+        .hero {
+            max-width: 780px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .flags {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .flags img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: var(--shadow);
+        }
+
+        .headline {
+            font-size: clamp(28px, 6vw, 52px);
+            line-height: 1.2;
+            font-weight: 800;
+            margin: 18px 0 8px;
+        }
+
+        .headline .break {
+            display: block;
+        }
+
+        .sub {
+            font-size: clamp(16px, 3vw, 22px);
+            color: var(--muted);
+            margin: 14px 0 26px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* AVATAR ACCAVALLATI E CENTRATI - MODIFICATO */
+        .avatars-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 0 0 36px;
+        }
+
+        .avatars-wrapper {
+            position: relative;
+            width: 312px;
+            /* Larghezza fissa per centrare correttamente */
+            height: 90px;
+            margin: 0 auto;
+        }
+
+        .avatars {
+            display: flex;
+            position: relative;
+            height: 90px;
+            width: 95%;
+        }
+
+        .chip {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            padding: 6px;
+            overflow: visible;
+            cursor: default;
+            box-shadow: 0 0 0 4px #fff, 0 0 0 6px var(--ring), var(--shadow);
+            transition: transform .15s ease, box-shadow .15s ease;
+            top: 0;
+        }
+
+        /* Centra i chip in base alla larghezza del wrapper */
+        .chip.p1 {
+            background: linear-gradient(180deg, #ffdbe8, #ffbcd0);
+            left: calc(50% - 156px);
+            z-index: 6;
+        }
+
+        .chip.p2 {
+            background: linear-gradient(180deg, #fff6cc, #f7e58a);
+            left: calc(50% - 104px);
+            z-index: 5;
+        }
+
+        .chip.p3 {
+            background: linear-gradient(180deg, #dff7fb, #bfeff7);
+            left: calc(50% - 52px);
+            z-index: 4;
+        }
+
+        .chip.p4 {
+            background: linear-gradient(180deg, #efe6ff, #d9c7ff);
+            left: calc(50%);
+            z-index: 3;
+        }
+
+        .chip.p5 {
+            background: linear-gradient(180deg, #ffe9e1, #ffc9c0);
+            left: calc(50% + 52px);
+            z-index: 2;
+        }
+
+        .chip.p6 {
+            background: linear-gradient(180deg, #e8f5d9, #cfe7a7);
+            left: calc(50% + 104px);
+            z-index: 1;
+        }
+
+        .chip img.avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .chip:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 0 4px #fff, 0 0 0 6px rgba(0, 0, 0, .09), 0 18px 40px rgba(0, 0, 0, .10);
+            z-index: 10;
+        }
+
+        form {
+            max-width: 620px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+        }
+
+        .field {
+            height: 58px;
+            border-radius: 8px;
+            padding: 0 18px;
+            font-size: 16px;
+            border: 1px solid var(--input-border);
+            outline: none;
+            box-shadow: var(--shadow);
+            background: #fff;
+            width: 100%;
+        }
+
+        .field::placeholder {
+            color: #a6a7ac;
+        }
+
+        .field:focus {
+            border-color: #111;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, .06);
+        }
+
+        .btn {
+            height: 58px;
+            border: none;
+            border-radius: 8px;
+            padding: 0 28px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            background: #19171A;
+            color: var(--btn-text);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform .06s ease, filter .2s ease;
+            white-space: nowrap;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid rgba(0, 0, 0, .3);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .avatars-wrapper {
+                width: 264px;
+                height: 78px;
+            }
+
+            .chip {
+                width: 70px;
+                height: 70px;
+            }
+
+            .chip.p1 {
+                left: calc(50% - 132px);
+            }
+
+            .chip.p2 {
+                left: calc(50% - 88px);
+            }
+
+            .chip.p3 {
+                left: calc(50% - 44px);
+            }
+
+            .chip.p4 {
+                left: calc(50%);
+            }
+
+            .chip.p5 {
+                left: calc(50% + 44px);
+            }
+
+            .chip.p6 {
+                left: calc(50% + 88px);
+            }
+
+            .avatars {
+                height: 78px;
+            }
+
+            .flags img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .avatars-wrapper {
+                width: 220px;
+                height: 68px;
+            }
+
+            .chip {
+                width: 60px;
+                height: 60px;
+            }
+
+            .chip.p1 {
+                left: calc(50% - 135px);
+            }
+
+            .chip.p2 {
+                left: calc(50% - 90px);
+            }
+
+            .chip.p3 {
+                left: calc(50% - 45px);
+            }
+
+            .chip.p4 {
+                left: calc(50% + 0px);
+            }
+
+            .chip.p5 {
+                left: calc(50% + 45px);
+            }
+
+            .chip.p6 {
+                left: calc(50% + 90px);
+            }
+
+
+            .avatars {
+                height: 68px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+
+            .headline {
+                font-size: 28px;
+            }
+
+            .sub {
+                font-size: 19px;
+            }
+
+            .wrap {
+                padding: 32px 16px;
+            }
+
+            .avatars-wrapper {
+                width: 185px;
+                height: 58px;
+            }
+
+            .chip {
+                width: 60px;
+                height: 60px;
+            }
+
+            .chip.p1 {
+                left: calc(50% - 135px);
+            }
+
+            .chip.p2 {
+                left: calc(50% - 90px);
+            }
+
+            .chip.p3 {
+                left: calc(50% - 45px);
+            }
+
+            .chip.p4 {
+                left: calc(50% + 0px);
+            }
+
+            .chip.p5 {
+                left: calc(50% + 45px);
+            }
+
+            .chip.p6 {
+                left: calc(50% + 90px);
+            }
+
+
+            .avatars {
+                height: 58px;
+            }
+
+            .chip img.avatar {
+                border-width: 4px;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="wrap">
+        <section class="hero" aria-label="Hero">
+            <div class="flags" aria-label="Lingue supportate">
+                <img src="assets/it.png" alt="Italiano" />
+                <img src="assets/de.png" alt="Tedesco" />
+                <img src="assets/gb.png" alt="Inglese" />
+                <img src="assets/sp.png" alt="Spagnolo" />
+                <img src="assets/fr.png" alt="Francese" />
+                <img src="assets/ci.png" alt="Cinese" />
+            </div>
+
+            <h1 class="headline">
+                Their Voice, your growth,
+                <span class="break">their reward</span>
+            </h1>
+
+            <p class="sub">Made simple by reviu'</p>
+
+            <div class="avatars-container">
+                <div class="avatars-wrapper">
+                    <div class="avatars" aria-hidden="false">
+                        <div class="chip p1"><img class="avatar" src="assets/person1.png" alt="Italiano" loading="lazy">
+                        </div>
+                        <div class="chip p2"><img class="avatar" src="assets/person2.png" alt="Tedesco" loading="lazy">
+                        </div>
+                        <div class="chip p3"><img class="avatar" src="assets/person3.png" alt="Inglese" loading="lazy">
+                        </div>
+                        <div class="chip p4"><img class="avatar" src="assets/person4.png" alt="Spagnolo" loading="lazy">
+                        </div>
+                        <div class="chip p5"><img class="avatar" src="assets/person5.png" alt="Francese" loading="lazy">
+                        </div>
+                        <div class="chip p6"><img class="avatar" src="assets/person6.png" alt="Cinese" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="lead-form" autocomplete="email" novalidate>
+                <div class="input-row">
+                    <label class="sr-only" for="email">Email</label>
+                    <input class="field" id="email" name="email" type="email" placeholder="Inserisci la tua Email..."
+                        required />
+                    <button class="btn" type="submit">Contattami</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        (function () {
+            const form = document.getElementById('lead-form');
+            const email = document.getElementById('email');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var value = email.value.trim();
+                if (!value) { email.focus(); return; }
+                var ok = value.indexOf('@') > 0 && value.indexOf('.') > value.indexOf('@');
+                if (!ok) { alert("Per favore inserisci un'email valida."); email.focus(); return; }
+
+                form.reset(); email.blur();
+                var btn = form.querySelector('.btn');
+                var label = btn.textContent;
+                btn.disabled = true; btn.textContent = 'Grazie!';
+                setTimeout(function () { btn.disabled = false; btn.textContent = label; }, 1800);
+            });
+        })();
+    </script>
+</body>
+
+</html>
